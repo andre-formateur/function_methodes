@@ -627,51 +627,140 @@ Vous : pierre | Ordinateur : (au hasard) → (résultat)
 
 ---
 
-# 🏆 Challenge : Le quiz
+# 🏆 Challenge : La mini-boutique
 
-Vous allez construire un **quiz** qui pose 3 questions tirées au hasard, calcule le score et affiche un message final. Utilisez `prompt` et `alert`.
+Vous allez construire, étape par étape, le code d'une **mini-boutique** : un catalogue, un panier et un ticket de caisse. Tout s'affiche dans la console. Ce challenge est **indépendant des exercices** : vous n'avez besoin que du cours.
 
-Voici la banque de questions à copier :
+Copiez ce point de départ :
 
 ```js
-const questions = [
-  { question: "Quelle balise HTML sert à créer un lien ?", reponse: "a", points: 1 },
-  { question: "Quel mot-clé déclare une variable modifiable ?", reponse: "let", points: 1 },
-  { question: "Quel mot-clé déclare une constante ?", reponse: "const", points: 1 },
-  { question: "Quelle méthode de tableau ajoute un élément à la fin ?", reponse: "push", points: 2 },
-  { question: "Combien font 7 x 8 ?", reponse: "56", points: 2 },
-  { question: "Quelle méthode de tableau transforme chaque élément ?", reponse: "map", points: 3 }
+const catalogue = [
+  { id: 1, nom: "clavier mécanique", prix: 89.9, stock: 5 },
+  { id: 2, nom: "souris sans fil", prix: 24.5, stock: 0 },
+  { id: 3, nom: "écran 27 pouces", prix: 249, stock: 2 },
+  { id: 4, nom: "casque audio", prix: 59.99, stock: 8 },
+  { id: 5, nom: "tapis de souris", prix: 9.9, stock: 30 }
 ];
+
+let panier = [];   // contiendra les id des produits ajoutés
 ```
 
-## Les étapes
+Écrivez les fonctions **dans l'ordre** : chaque étape peut utiliser les précédentes. Testez chaque fonction dans la console avant de passer à la suivante.
 
-1. **`normaliser(texte)`** : renvoie le texte sans espaces autour et en minuscules. Si le texte est absent (`null` quand l'utilisateur clique sur « Annuler »), la fonction renvoie une chaîne vide.
-2. **`poserQuestion(q)`** : affiche la question avec `prompt`, compare la réponse (normalisée) avec la bonne réponse (normalisée aussi). Elle affiche avec `alert` soit `Bonne réponse ! +2 point(s)`, soit `Raté ! La réponse était : push`. Elle **renvoie** les points gagnés (`0` si la réponse est fausse).
-3. **`tirerQuestions(tableau, nombre)`** : renvoie un tableau de `nombre` questions **différentes**, tirées au hasard dans la banque (utilisez `elementAuHasard`, `includes` et `!`, avec une boucle `while`).
-4. **Le programme principal** :
-   - tirez 3 questions ;
-   - calculez le total de points possibles avec `forEach` ;
-   - posez chaque question avec `forEach` et cumulez le score.
-5. **Le message final** : affichez `Score : 5 / 7 (71 %)`, suivi d'un message selon le pourcentage :
-   - `80 %` ou plus : `Excellent !` ;
-   - `50 %` ou plus : `Bien joué !` ;
-   - sinon : `Courage, vous ferez mieux la prochaine fois !`
+## Étape 1 : `formaterNom(nom)`
 
-## Exemple de partie
+Renvoie le nom avec la **première lettre de chaque mot en majuscule**.
 
-```
-Question : Quelle méthode de tableau ajoute un élément à la fin ?   → "  PUSH "
-Bonne réponse ! +2 point(s)
-
-Question : Quel mot-clé déclare une variable modifiable ?   → "var"
-Raté ! La réponse était : let
-
-Question : Combien font 7 x 8 ?   → "56"
-Bonne réponse ! +2 point(s)
-
-Score : 4 / 5 (80 %)
-Excellent !
+```js
+console.log(formaterNom("clavier mécanique"));   // Clavier Mécanique
 ```
 
-💡 Si vous bloquez, avancez étape par étape et testez chaque fonction dans la console **avant** de passer à la suivante.
+💡 Découpez avec `split(" ")`, transformez chaque mot avec `map` (`slice(0, 1).toUpperCase()` + `slice(1)`), puis recollez avec `join(" ")`.
+
+## Étape 2 : `formaterPrix(prix)`
+
+Renvoie le prix avec **2 décimales** suivi du symbole `€`.
+
+```js
+console.log(formaterPrix(89.9));   // 89.90 €
+console.log(formaterPrix(249));    // 249.00 €
+```
+
+## Étape 3 : `afficherCatalogue(titre)`
+
+Affiche d'abord `=== titre ===`. Si aucun titre n'est donné, le titre est `Catalogue` (utilisez `||`). Affiche ensuite chaque produit avec `forEach`, sous la forme `id - Nom : prix (X en stock)`. Si le stock vaut `0`, affichez `(rupture de stock)` à la place (utilisez `!`).
+
+```
+=== Catalogue ===
+1 - Clavier Mécanique : 89.90 € (5 en stock)
+2 - Souris Sans Fil : 24.50 € (rupture de stock)
+3 - Écran 27 Pouces : 249.00 € (2 en stock)
+4 - Casque Audio : 59.99 € (8 en stock)
+5 - Tapis De Souris : 9.90 € (30 en stock)
+```
+
+## Étape 4 : `trouverProduit(id)`
+
+Renvoie le produit du catalogue qui a cet `id` (utilisez `find`), ou `undefined` s'il n'existe pas.
+
+## Étape 5 : `ajouterAuPanier(id)`
+
+Ajoute un produit au panier et affiche un message. L'`id` peut arriver sous forme de **texte** (par exemple `"5"`) : convertissez-le d'abord avec `Number`. Traitez les cas **dans cet ordre** :
+
+1. Si ce n'est pas un nombre (`isNaN`) : `Numéro invalide`.
+2. Si le produit n'existe pas : `Produit introuvable`.
+3. Si le stock est à `0` : `Rupture de stock : Souris Sans Fil`.
+4. Si l'`id` est déjà dans le panier (`includes`) : `Déjà dans le panier : Clavier Mécanique`.
+5. Sinon, ajoutez l'`id` au panier avec le **spread** (`panier = [...panier, numero]`) et affichez `Ajouté au panier : Clavier Mécanique`.
+
+## Étape 6 : `afficherTicket()`
+
+Affiche le contenu du panier, puis les totaux. Les prix du catalogue sont **hors taxes** et la TVA est de 20 %.
+
+```
+--- Ticket ---
+- Clavier Mécanique : 89.90 €
+- Écran 27 Pouces : 249.00 €
+- Tapis De Souris : 9.90 €
+Total HT : 348.80 €
+TVA (20 %) : 69.76 €
+Total TTC : 418.56 €
+```
+
+## Étape 7 : `afficherStatistiques()`
+
+Affiche le nombre de produits disponibles (stock supérieur à `0`, avec `filter`) et le produit le plus cher (calculez le prix maximum avec `Math.max` et le spread, puis retrouvez le produit avec `find`).
+
+```
+Produits disponibles : 4 sur 5
+Produit le plus cher : Écran 27 Pouces (249.00 €)
+```
+
+## Test final
+
+Placez ces lignes à la fin de votre fichier :
+
+```js
+afficherCatalogue();
+ajouterAuPanier(1);
+ajouterAuPanier(3);
+ajouterAuPanier(1);
+ajouterAuPanier(2);
+ajouterAuPanier(9);
+ajouterAuPanier("abc");
+ajouterAuPanier("5");
+afficherTicket();
+afficherStatistiques();
+```
+
+**Résultat attendu :**
+
+```
+=== Catalogue ===
+1 - Clavier Mécanique : 89.90 € (5 en stock)
+2 - Souris Sans Fil : 24.50 € (rupture de stock)
+3 - Écran 27 Pouces : 249.00 € (2 en stock)
+4 - Casque Audio : 59.99 € (8 en stock)
+5 - Tapis De Souris : 9.90 € (30 en stock)
+Ajouté au panier : Clavier Mécanique
+Ajouté au panier : Écran 27 Pouces
+Déjà dans le panier : Clavier Mécanique
+Rupture de stock : Souris Sans Fil
+Produit introuvable
+Numéro invalide
+Ajouté au panier : Tapis De Souris
+--- Ticket ---
+- Clavier Mécanique : 89.90 €
+- Écran 27 Pouces : 249.00 €
+- Tapis De Souris : 9.90 €
+Total HT : 348.80 €
+TVA (20 %) : 69.76 €
+Total TTC : 418.56 €
+Produits disponibles : 4 sur 5
+Produit le plus cher : Écran 27 Pouces (249.00 €)
+```
+
+## Bonus ⭐
+
+- Ajoutez une fonction `retirerDuPanier(id)` qui renvoie un nouveau panier sans cet `id` (utilisez `filter`).
+- Affichez dans le ticket le **nombre d'articles** et un message `Panier vide` si le panier ne contient rien.
