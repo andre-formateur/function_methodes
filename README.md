@@ -759,3 +759,6 @@ Total TTC : 418.56 €
 Produits disponibles : 4 sur 5
 Produit le plus cher : Écran 27 Pouces (249.00 €)
 ```
+
+## BONUS EN AUTONOMIE
+- Rendre le challenge utilisable via les prompts et les alert
