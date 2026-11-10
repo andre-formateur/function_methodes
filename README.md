@@ -577,9 +577,32 @@ false
 
 ## Exercice 5.3 : Le hasard
 
-1. Déclarez une fonction `lancerDe` qui reçoit un nombre de faces et renvoie un entier au hasard entre `1` et ce nombre. Testez-la **1000 fois** avec 6 faces, rangez les résultats dans un tableau, puis affichez le plus petit et le plus grand résultat.
-2. Déclarez une fonction `entierAuHasard` qui reçoit un `min` et un `max` et renvoie un entier au hasard entre les deux (inclus). Testez-la 1000 fois avec `(10, 20)` et affichez le plus petit et le plus grand résultat.
-3. Déclarez une fonction `elementAuHasard` qui reçoit un tableau et renvoie un de ses éléments au hasard. Testez avec `["pierre", "feuille", "ciseaux"]`.
+Le calcul pour tirer un nombre au hasard est donné : à vous de l'utiliser dans des fonctions.
+
+> **Rappel : tirer un entier de 1 à n**
+>
+> ```js
+> Math.random()                          // décimal entre 0 et 1 (exemple : 0.73)
+> Math.random() * 6                      // décimal entre 0 et 6 (exemple : 4.38)
+> Math.floor(Math.random() * 6)          // entier de 0 à 5 (exemple : 4)
+> Math.floor(Math.random() * 6) + 1      // entier de 1 à 6 (exemple : 5)
+> ```
+>
+> **Entier entre `min` et `max` (inclus) :**
+>
+> ```js
+> Math.floor(Math.random() * (max - min + 1)) + min
+> ```
+>
+> **Élément d'un tableau au hasard :**
+>
+> ```js
+> tableau[Math.floor(Math.random() * tableau.length)]
+> ```
+
+1. Déclarez une fonction `lancerDe` qui reçoit un nombre de faces et renvoie un entier au hasard entre `1` et ce nombre (remplacez le `6` du rappel par le paramètre). Testez-la **1000 fois** avec 6 faces avec une boucle `for`, rangez les résultats dans un tableau, puis affichez le plus petit et le plus grand résultat avec `Math.min(...resultats)` et `Math.max(...resultats)`.
+2. Déclarez une fonction `entierAuHasard` qui reçoit un `min` et un `max` et renvoie un entier au hasard entre les deux (inclus), avec la formule du rappel. Testez-la 1000 fois avec `(10, 20)` et affichez le plus petit et le plus grand résultat.
+3. Déclarez une fonction `elementAuHasard` qui reçoit un tableau et renvoie un de ses éléments au hasard, avec la formule du rappel. Testez avec `["pierre", "feuille", "ciseaux"]`.
 4. **Pierre, feuille, ciseaux.**
    - Déclarez une fonction `arbitrer` qui reçoit le choix du joueur et celui de l'ordinateur, et renvoie `"Égalité"`, `"Gagné"` ou `"Perdu"`. Pierre bat ciseaux, feuille bat pierre, ciseaux bat feuille.
    - Testez avec `("pierre", "ciseaux")`, `("pierre", "feuille")`, `("feuille", "feuille")` et `("ciseaux", "feuille")`.
