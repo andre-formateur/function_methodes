@@ -674,10 +674,4 @@ Score : 4 / 5 (80 %)
 Excellent !
 ```
 
-## Bonus ⭐
-
-- Ajoutez une question dont la réponse est un **nombre**. Si l'utilisateur saisit autre chose qu'un nombre (vérifiez avec `Number` et `isNaN`), affichez `Veuillez saisir un nombre.` et redemandez la réponse.
-- Affichez à la fin la **liste des questions ratées** (avec `filter` et `map`).
-- Faites varier le nombre de questions : demandez-le à l'utilisateur au début, et vérifiez qu'il est un entier compris entre 1 et le nombre de questions de la banque.
-
 💡 Si vous bloquez, avancez étape par étape et testez chaque fonction dans la console **avant** de passer à la suivante.
