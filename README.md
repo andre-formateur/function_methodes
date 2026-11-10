@@ -759,8 +759,3 @@ Total TTC : 418.56 €
 Produits disponibles : 4 sur 5
 Produit le plus cher : Écran 27 Pouces (249.00 €)
 ```
-
-## Bonus ⭐
-
-- Ajoutez une fonction `retirerDuPanier(id)` qui renvoie un nouveau panier sans cet `id` (utilisez `filter`).
-- Affichez dans le ticket le **nombre d'articles** et un message `Panier vide` si le panier ne contient rien.
